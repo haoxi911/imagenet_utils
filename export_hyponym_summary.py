@@ -7,9 +7,11 @@ if __name__ == '__main__':
         print("Usage: export_hyponym_summary.py data_folder")
 
     if len(sys.argv) == 2:
-        for root, dirs, files in os.walk(sys.argv[1]):
-            if root[:1] == 'n':
-                wnid = root[:9]
-                name = root[10:]
-                print('%s \t %d \t %s' % (wnid, len(files), name))
-
+        folders = [name for name in os.listdir(sys.argv[1]) if
+                os.path.isdir(os.path.join(sys.argv[1], name) and len(name) > 10 and name[:1] == 'n')]
+        for folder in folders:
+            wnid = folder[:9]
+            name = folder[10:]
+            folder = os.path.join(sys.argv[1], folder)
+            count = len([name for name in os.listdir(folder) if os.path.isfile(os.path.join(folder, name))])
+            print('%s \t %d \t %s' % (wnid, count, name))
