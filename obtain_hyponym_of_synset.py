@@ -45,11 +45,11 @@ def _extract_tars(dataset, wnid, nodes):
         if not os.path.exists(tar):
             print("Tarball wasn't found at path: %s" % tar)
         else:
-            path = os.path.join(path, key + " " + value)
-            os.makedirs(path)
-            print("Extract tarball to folder: %s" % path)
+            dest = os.path.join(path, key + " " + value)
+            os.makedirs(dest)
+            print("Extract tarball to folder: %s" % dest)
             handle = tarfile.open(tar)
-            handle.extractall(path)
+            handle.extractall(dest)
 
 
 if __name__ == '__main__':
