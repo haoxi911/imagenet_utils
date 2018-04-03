@@ -41,15 +41,15 @@ def _extract_tars(dataset, wnid, nodes):
         shutil.rmtree(path)
     os.makedirs(path)
     for key, value in nodes.iteritems():
-        #tar = os.path.join(dataset, key + '.tar')
-        #if not os.path.exists(tar):
-        #    print("Tarball wasn't found at path: %s" % tar)
-        #else:
-        dest = os.path.join(path, key + " " + value)
-        os.makedirs(dest)
-        #    print("Extract tarball to folder: %s" % dest)
-        #    handle = tarfile.open(tar)
-        #    handle.extractall(dest)
+        tar = os.path.join(dataset, key + '.tar')
+        if not os.path.exists(tar):
+            print("Tarball wasn't found at path: %s" % tar)
+        else:
+            dest = os.path.join(path, key + " " + value)
+            os.makedirs(dest)
+            print("Extract tarball to folder: %s" % dest)
+            handle = tarfile.open(tar)
+            handle.extractall(dest)
 
 
 if __name__ == '__main__':
