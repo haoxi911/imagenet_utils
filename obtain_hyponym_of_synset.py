@@ -14,7 +14,7 @@ def _read_synset_csv():
         return {rows[0]: rows[1] for rows in reader}
 
 
-def _list_hyponym(dict, wnid, output=[]):
+def _list_hyponym(dict, wnid, output={}):
     output[wnid] = dict[wnid]
     contents = urllib2.urlopen(BASE_URL % wnid ).read()
     lines = contents.splitlines()
