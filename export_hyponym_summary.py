@@ -7,11 +7,13 @@ if __name__ == '__main__':
         print("Usage: export_hyponym_summary.py data_folder")
 
     if len(sys.argv) == 2:
-        folders = [name for name in os.listdir(sys.argv[1]) if (
-            os.path.isdir(os.path.join(sys.argv[1], name) and len(name) > 10 and name[:1] == 'n'))]
-        for folder in folders:
-            wnid = folder[:9]
-            name = folder[10:]
-            folder = os.path.join(sys.argv[1], folder)
-            count = len([name for name in os.listdir(folder) if os.path.isfile(os.path.join(folder, name))])
-            print('%s \t %d \t %s' % (wnid, count, name))
+        data = []
+        for root, dirs, files in os.walk(sys.argv[1]):
+            if root != sys.argv[1]:
+                path = os.path.basename(os.path.normpath(root))
+                if path[:1] == "n" and len(path) > 10:
+                    data.append((path[:9], len(files), path[10:]))
+        with open('summary.csv', 'wb') as csv_file:
+            writer = csv.writer(csv_file)
+            for wnid, count, name in data:
+                writer.writerow([wnid, count, name])
