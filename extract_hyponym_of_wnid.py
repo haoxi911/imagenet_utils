@@ -20,14 +20,6 @@ def _read_synset_nodes():
     return dic
 
 
-def _list_hyponym(wnid):
-    output = {}
-    _list_hyponym_sub(
-        wnid, _read_synset_words(), _read_synset_nodes(), output
-    )
-    return output
-
-
 def _list_hyponym_sub(wnid, words, nodes, output):
     output[wnid] = words[wnid]
     if wnid in nodes:
@@ -35,27 +27,31 @@ def _list_hyponym_sub(wnid, words, nodes, output):
             _list_hyponym_sub(node, words, nodes, output)
 
 
-def _extract_tars(dataset, wnid, nodes):
-    path = os.path.join(os.getcwd(), wnid)
+def _extract_tars(imagenet_folder, wnid):
+    items = {}
+    words = _read_synset_words()
+    nodes = _read_synset_nodes()
+    _list_hyponym_sub(wnid, words, nodes, items)
+
+    path = os.path.join(os.getcwd(), ('images-%s' % wnid))
     if os.path.exists(path):
         shutil.rmtree(path)
     os.makedirs(path)
-    for key, value in nodes.iteritems():
-        tar = os.path.join(dataset, key + '.tar')
-        if not os.path.exists(tar):
-            print("Tarball wasn't found at path: %s" % tar)
+    for key, value in items.iteritems():
+        filepath = os.path.join(imagenet_folder, key + '.tar')
+        if not os.path.exists(filepath):
+            print("Tarball wasn't found at path: %s" % filepath)
         else:
             dest = os.path.join(path, key + " " + value)
             os.makedirs(dest)
-            print("Extract tarball to folder: %s" % dest)
-            handle = tarfile.open(tar)
-            handle.extractall(dest)
+            print("Extract images in tarball to folder: %s" % dest)
+            tar = tarfile.open(filepath)
+            tar.extractall(dest)
+            tar.close()
 
 
 if __name__ == '__main__':
     if not (len(sys.argv) == 3):
-        print("Usage: obtain_hyponym_of_synset.py dataset_folder wnid")
-
-    if len(sys.argv) == 3:
-        nodes = _list_hyponym(sys.argv[2])
-        _extract_tars(sys.argv[1], sys.argv[2], nodes)
+        print("Usage: extract_hyponym_of_wnid.py imagenet_folder wnid")
+    else:
+        _extract_tars(sys.argv[1], sys.argv[2])

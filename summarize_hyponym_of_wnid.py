@@ -48,7 +48,6 @@ def _export_summary(imagenet_folder, wnid):
 
 if __name__ == '__main__':
     if not (len(sys.argv) == 3):
-        print("Usage: obtain_hyponym_of_synset.py imagenet_folder wnid")
-
-    if len(sys.argv) == 3:
+        print("Usage: summarize_hyponym_of_wnid.py imagenet_folder wnid")
+    else:
         _export_summary(sys.argv[1], sys.argv[2])
