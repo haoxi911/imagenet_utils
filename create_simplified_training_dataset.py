@@ -33,7 +33,7 @@ def _copy_images_for_class(cls, dic, copy_total, input_folder, output_folder):
     print('  Pick up {:4d} images from each subclass'.format(avg_total))
     dst_folder = os.path.join(output_folder, cls)
     os.makedirs(dst_folder)
-    
+
     for wnid in dic:
         folder = next(val for val in subfolders if wnid in val)
         folder = os.path.join(input_folder, folder)
@@ -58,7 +58,7 @@ def _copy_images_for_unwanted_class(cls, dic, input_folder, output_folder):
 
 if __name__ == '__main__':
     if not (len(sys.argv) == 4):
-        print("Usage: create_training_dataset.py input_csv input_folder output_folder")
+        print("Usage: create_simplified_training_dataset.py input_csv input_folder output_folder")
 
     if len(sys.argv) == 4:
         classes = _read_input_summary(sys.argv[1])
