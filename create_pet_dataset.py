@@ -66,6 +66,7 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
             handle.extract(item, dst_folder)
             print('  Extracted file: %s' % item.name)
             index += 1
+        handle.close()
 
 
 if __name__ == '__main__':
