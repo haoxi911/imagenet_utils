@@ -15,7 +15,7 @@ NOT_PET_IMAGES_TOTAL = 20000
 
 
 def _read_wnid_list(imagenet_folder):
-    return [name[:10] for name in os.listdir(imagenet_folder)]
+    return [name[:9] for name in os.listdir(imagenet_folder)]
 
 
 def _read_pet_list():
