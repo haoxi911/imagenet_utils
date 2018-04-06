@@ -93,3 +93,8 @@ if __name__ == '__main__':
                         shutil.rmtree(os.path.join(sys.argv[2], key))
                     _copy_images(key, summary[key], sys.argv[1], sys.argv[2])
                     break
+
+        # delete some broken images
+        filepath = os.path.join(sys.argv[2], 'R', 'n01640846_9466.JPEG')
+        if os.path.exists(filepath):
+            os.remove(filepath)
