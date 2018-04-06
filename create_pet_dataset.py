@@ -69,16 +69,27 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         handle.close()
 
 
-if __name__ == '__main__':
-    if not (len(sys.argv) == 4):
-        print("Usage: create_pet_dataset.py imagenet_folder output_folder")
+def _copy_images(cls, dic, imagenet_folder, output_folder):
+    if key != 'N':
+        _copy_images_for_class(cls, dic, PET_IMAGES_PER_CLASS, imagenet_folder, output_folder)
+    else:
+        _copy_images_for_class(cls, dic, NOT_PET_IMAGES_TOTAL, imagenet_folder, output_folder)
 
-    if len(sys.argv) == 3:
+
+if __name__ == '__main__':
+    if not (len(sys.argv) == 3 or len(sys.argv) == 4):
+        print("Usage: create_pet_dataset.py imagenet_folder output_folder")
+    else:
         summary = _read_pet_summary(sys.argv[1])
-        if os.path.exists(sys.argv[2]):
-            shutil.rmtree(sys.argv[2])
-        for key in summary:
-            if key != 'N':
-                _copy_images_for_class(key, summary[key], PET_IMAGES_PER_CLASS, sys.argv[1], sys.argv[2])
-            else:
-                _copy_images_for_class(key, summary[key], NOT_PET_IMAGES_TOTAL, sys.argv[1], sys.argv[2])
+        if len(sys.argv) == 3:
+            if os.path.exists(sys.argv[2]):
+                shutil.rmtree(sys.argv[2])
+            for key in summary:
+                _copy_images(key, summary[key], sys.argv[1], sys.argv[2])
+        else:
+            for key in summary:
+                if key == sys.argv[3]:
+                    if os.path.exists(os.path.join(sys.argv[2], key)):
+                        shutil.rmtree(os.path.join(sys.argv[2], key))
+                    _copy_images(key, summary[key], sys.argv[1], sys.argv[2])
+                    break
