@@ -423,7 +423,7 @@ n02599052,1290,sea trout,F,confirmed
 n02585872,1289,"cichlid, cichlid fish",F,confirmed
 n02561108,1278,pike,F,confirmed
 n02527271,1276,"moray, moray eel",F,confirmed
-n01456756,1272,"seahorse, sea horse",F,confirmed
+n01456756,1272,"seahorse, sea horse",,Should it be fish?
 n02561381,1269,"northern pike, Esox lucius",F,confirmed
 n02565324,1262,"largemouth, largemouth bass, largemouthed bass, largemouth black bass, largemouthed black bass, Micropterus salmoides",F,confirmed
 n02564720,1262,black bass,F,confirmed
