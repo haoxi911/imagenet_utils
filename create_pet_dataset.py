@@ -8,10 +8,10 @@ import tarfile
 
 
 # number of images for each pet category (e.g. cats, dogs, etc.)
-PET_IMAGES_PER_CLASS = 2000
+PET_IMAGES_PER_CLASS = 4000
 
 # number of images for general 'not pet' category
-NOT_PET_IMAGES_TOTAL = 20000
+NOT_PET_IMAGES_TOTAL = 60000
 
 
 def _read_wnid_list(imagenet_folder):
