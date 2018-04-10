@@ -8,10 +8,15 @@ import tarfile
 
 
 # number of images for each pet category (e.g. cats, dogs, etc.)
-PET_IMAGES_PER_CLASS = 4000
+PET_IMAGES_PER_CLASS = 8000
 
 # number of images for general 'not pet' category
-NOT_PET_IMAGES_TOTAL = 60000
+NOT_PET_IMAGES_TOTAL = 360000
+
+# how we split train / validation / test set.
+PERCENTAGE_FOR_TRAIN = 0.75
+PERCENTAGE_FOR_VALIDATION = 0.2
+PERCENTAGE_FOR_TEST = 0.05
 
 # the wnids in 'not pet' category but contains pet images
 PET_IMAGES_IN_NOT_PET = [
@@ -64,10 +69,12 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
     else:
         print('- Class: {:5s} Subclasses: {:5d} '.format(cls, len(dic)))
 
-    avg = int(math.ceil(float(copy_total) / len(dic)))
-    print('  Pick up {:4d} images from each subclass'.format(avg))
-    dst_folder = os.path.join(output_folder, cls)
-    os.makedirs(dst_folder)
+    avg_total = int(math.ceil(float(copy_total) / len(dic)))
+    avg_train = int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN))
+    avg_val = int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION))
+    avg_test = avg_total - avg_train - avg_val
+    print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
+          .format(avg_total, avg_train, avg_val, avg_test))
 
     for wnid in dic:
         tar = os.path.join(imagenet_folder, wnid + '.tar')
@@ -75,8 +82,18 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         files = handle.getmembers()
         random.shuffle(files)
         index = 0
+        dst_folder = ''
         for item in files:
-            if index == avg:
+            if index == 0:
+                dst_folder = os.path.join(output_folder, 'train', cls)
+                os.makedirs(dst_folder)
+            elif index == avg_train:
+                dst_folder = os.path.join(output_folder, 'val', cls)
+                os.makedirs(dst_folder)
+            elif index == avg_train + avg_val:
+                dst_folder = os.path.join(output_folder, 'test', cls)
+                os.makedirs(dst_folder)
+            elif index == avg_total:
                 break
             handle.extract(item, dst_folder)
             print('  Extracted file: %s' % item.name)
