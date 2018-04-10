@@ -85,15 +85,15 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         dst_folder = ''
         for item in files:
             if index == 0:
-                dst_folder = os.path.join(output_folder, 'train', cls)
+                dst_folder = os.path.join(output_folder, cls, 'training')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
             elif index == avg_train:
-                dst_folder = os.path.join(output_folder, 'val', cls)
+                dst_folder = os.path.join(output_folder, cls, 'validation')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
             elif index == avg_train + avg_val:
-                dst_folder = os.path.join(output_folder, 'test', cls)
+                dst_folder = os.path.join(output_folder, cls, 'testing')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
             elif index == avg_total:
