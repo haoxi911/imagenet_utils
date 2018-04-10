@@ -86,13 +86,16 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         for item in files:
             if index == 0:
                 dst_folder = os.path.join(output_folder, 'train', cls)
-                os.makedirs(dst_folder)
+                if not os.path.exists(dst_folder):
+                    os.makedirs(dst_folder)
             elif index == avg_train:
                 dst_folder = os.path.join(output_folder, 'val', cls)
-                os.makedirs(dst_folder)
+                if not os.path.exists(dst_folder):
+                    os.makedirs(dst_folder)
             elif index == avg_train + avg_val:
                 dst_folder = os.path.join(output_folder, 'test', cls)
-                os.makedirs(dst_folder)
+                if not os.path.exists(dst_folder):
+                    os.makedirs(dst_folder)
             elif index == avg_total:
                 break
             handle.extract(item, dst_folder)
