@@ -70,9 +70,11 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         print('- Class: {:5s} Subclasses: {:5d} '.format(cls, len(dic)))
 
     avg_total = int(math.ceil(float(copy_total) / len(dic)))
-    avg_train = int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN))
-    avg_val = int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION))
-    avg_test = avg_total - avg_train - avg_val
+    avg_train = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN)), 1)
+    avg_val = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION)), 1)
+    avg_test = max(avg_total - avg_train - avg_val, 1)
+    avg_total = avg_train + avg_val + avg_test
+
     print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
           .format(avg_total, avg_train, avg_val, avg_test))
 
@@ -96,7 +98,7 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
                 dst_folder = os.path.join(output_folder, cls, 'testing')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
-            elif index == avg_total:
+            elif index >= avg_total:
                 break
             handle.extract(item, dst_folder)
             print('  Extracted file: %s' % item.name)
