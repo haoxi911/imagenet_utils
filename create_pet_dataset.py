@@ -13,6 +13,21 @@ PET_IMAGES_PER_CLASS = 4000
 # number of images for general 'not pet' category
 NOT_PET_IMAGES_TOTAL = 60000
 
+# the wnids in 'not pet' category but contains pet images
+PET_IMAGES_IN_NOT_PET = [
+    'n00005787', 'n00288000', 'n00288190', 'n00288384', 'n00440218', 'n00449977', 'n00450070', 'n00450335', 'n00450700',
+    'n00450866', 'n00450998', 'n00451186', 'n00452864', 'n00453126', 'n00453478', 'n00453935', 'n00454237', 'n00454395',
+    'n00454493', 'n01322508', 'n01519873', 'n01696633', 'n01697178', 'n01697457', 'n01698434', 'n01698640', 'n02010272',
+    'n02062430', 'n02062744', 'n02064816', 'n02065026', 'n02066245', 'n02068541', 'n02068974', 'n02069412', 'n02069701',
+    'n02069974', 'n02071294', 'n02071636', 'n02391234', 'n02391373', 'n02469248', 'n02900160', 'n02900459', 'n02900594',
+    'n02910864', 'n02912557', 'n02937958', 'n03217739', 'n03218198', 'n03352232', 'n03388711', 'n03410740', 'n03480719',
+    'n03480973', 'n03610524', 'n03638014', 'n03644378', 'n03651843', 'n03652932', 'n03745146', 'n03803284', 'n03831203',
+    'n03831382', 'n03959014', 'n03981924', 'n03993703', 'n04100519', 'n04215153', 'n04295353', 'n04353573', 'n04368840',
+    'n04486616', 'n04577567', 'n04593629', 'n04979002', 'n04979307', 'n07805594', 'n07805731', 'n07805966', 'n07806043',
+    'n07806120', 'n08560295', 'n08616050', 'n08614632', 'n09290350', 'n09902353', 'n09967555', 'n10062594', 'n10185793',
+    'n10186068', 'n10186143', 'n10186216', 'n10342893', 'n10530383', 'n10538733', 'n10538853', 'n10540252', 'n10722029',
+    'n10802507', 'n12118414']
+
 
 def _read_wnid_list(imagenet_folder):
     return [name[:9] for name in os.listdir(imagenet_folder)]
@@ -21,11 +36,11 @@ def _read_wnid_list(imagenet_folder):
 def _read_pet_list():
     with open('imagenet-animals.csv', mode='r') as infile:
         reader = csv.reader(infile)
-        return [rows[0] for rows in reader if rows[3] == '' or rows[3] != 'N']
+        return [rows[0] for rows in reader]  # if rows[3] == '' or rows[3] != 'N'
 
 
 def _read_not_pet_list(imagenet_folder):
-    return list(set(_read_wnid_list(imagenet_folder)) - set(_read_pet_list()))
+    return list(set(_read_wnid_list(imagenet_folder)) - set(_read_pet_list()) - set(PET_IMAGES_IN_NOT_PET))
 
 
 def _read_pet_summary(imagenet_folder):
@@ -76,6 +91,19 @@ def _copy_images(cls, dic, imagenet_folder, output_folder):
         _copy_images_for_class(cls, dic, NOT_PET_IMAGES_TOTAL, imagenet_folder, output_folder)
 
 
+def _clean_up(output_folder):
+    dic = {
+        'n01640846_9466.JPEG': 'R',
+        'n04155068_537.JPEG': 'N',
+        'n12757303_3302.JPEG': 'N'
+    }
+    # delete some broken images
+    for name, folder in dic.iteritems():
+        path = os.path.join(output_folder, folder, name)
+        if os.path.exists(path):
+            os.remove(path)
+
+
 if __name__ == '__main__':
     if not (len(sys.argv) == 3 or len(sys.argv) == 4):
         print("Usage: create_pet_dataset.py imagenet_folder output_folder")
@@ -93,8 +121,4 @@ if __name__ == '__main__':
                         shutil.rmtree(os.path.join(sys.argv[2], key))
                     _copy_images(key, summary[key], sys.argv[1], sys.argv[2])
                     break
-
-        # delete some broken images
-        filepath = os.path.join(sys.argv[2], 'R', 'n01640846_9466.JPEG')
-        if os.path.exists(filepath):
-            os.remove(filepath)
+        _clean_up(sys.argv[2])
