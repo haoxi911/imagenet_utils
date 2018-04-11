@@ -43,7 +43,7 @@ def _import_oxford_dataset(cls, breeds, input_folder, output_folder):
         avg_val = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION)), 1)
         avg_test = max(avg_total - avg_train - avg_val, 1)
         avg_total = avg_train + avg_val + avg_test
-        print('  Pick up {:4d} images from {:30s}, {:4d} for training, {:4d} for validation, {:4d} for testing'
+        print('  Pick up {:4d} images from {:s}, {:4d} for training, {:4d} for validation, {:4d} for testing'
               .format(avg_total, breed, avg_train, avg_val, avg_test))
 
         index = 0
@@ -63,7 +63,7 @@ def _import_oxford_dataset(cls, breeds, input_folder, output_folder):
                     os.makedirs(dst_folder)
             elif index >= avg_total:
                 break
-            #shutil.copyfile(item, dst_folder)
+            shutil.copyfile(item, dst_folder)
             print('  Copied file: %s' % item)
             index += 1
 
