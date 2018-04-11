@@ -159,13 +159,8 @@ def create_image_lists(image_dir):
     tf.logging.error("Image directory '" + image_dir + "' not found.")
     return None
   result = {}
-  sub_dirs = [x[0] for x in gfile.Walk(image_dir)]
-  # The root directory comes first, so skip it.
-  is_root_dir = True
+  sub_dirs = [x for x in os.listdir(image_dir) if os.path.isdir(os.path.join(image_dir, x))]
   for sub_dir in sub_dirs:
-    if is_root_dir:
-      is_root_dir = False
-      continue
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
     training_files = validation_files = testing_files = []
     dir_name = os.path.basename(sub_dir)
