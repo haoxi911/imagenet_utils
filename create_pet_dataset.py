@@ -92,11 +92,15 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         files = handle.getmembers()
         random.shuffle(files)
 
+        copy_total = avg_total
+        copy_train = avg_train
+        copy_val = avg_val
         if cls == 'N' and wnid in NOT_PET_IMAGES_ENHANCED:
-            avg_total = min(NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS, len(files))
-            avg_train = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN)), 1)
-            avg_val = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION)), 1)
-            # avg_test = max(avg_total - avg_train - avg_val, 1)
+            copy_total = min(NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS, len(files))
+            copy_train = max(int(math.ceil(float(copy_total) * PERCENTAGE_FOR_TRAIN)), 1)
+            copy_val = max(int(math.ceil(float(copy_total) * PERCENTAGE_FOR_VALIDATION)), 1)
+            copy_test = max(copy_total - copy_train - copy_val, 1)
+            copy_total = copy_train + copy_val + copy_test
 
         index = 0
         dst_folder = ''
@@ -105,15 +109,15 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
                 dst_folder = os.path.join(output_folder, cls, 'training')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
-            elif index == avg_train:
+            elif index == copy_train:
                 dst_folder = os.path.join(output_folder, cls, 'validation')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
-            elif index == avg_train + avg_val:
+            elif index == copy_train + copy_val:
                 dst_folder = os.path.join(output_folder, cls, 'testing')
                 if not os.path.exists(dst_folder):
                     os.makedirs(dst_folder)
-            elif index >= avg_total:
+            elif index >= copy_total:
                 break
             handle.extract(item, dst_folder)
             print('  Extracted file: %s' % item.name)
