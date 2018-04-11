@@ -63,7 +63,7 @@ def _import_oxford_dataset(cls, breeds, input_folder, output_folder):
                     os.makedirs(dst_folder)
             elif index >= avg_total:
                 break
-            shutil.copyfile(item, dst_folder)
+            shutil.copy(item, dst_folder)
             print('  Copied file: %s' % item)
             index += 1
 
