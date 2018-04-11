@@ -13,12 +13,15 @@ PET_IMAGES_PER_CLASS = 8000
 # number of images for general 'not pet' category
 NOT_PET_IMAGES_TOTAL = 360000
 
+# number of images for each enhanced subclass in 'not pet' category
+NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS = 1000
+
 # how we split train / validation / test set.
 PERCENTAGE_FOR_TRAIN = 0.75
 PERCENTAGE_FOR_VALIDATION = 0.2
 PERCENTAGE_FOR_TEST = 0.05
 
-# the wnids in 'not pet' category but contains pet images
+# the wnids in 'not pet' category but contain pet images
 PET_IMAGES_IN_NOT_PET = [
     'n00005787', 'n00288000', 'n00288190', 'n00288384', 'n00440218', 'n00449977', 'n00450070', 'n00450335', 'n00450700',
     'n00450866', 'n00450998', 'n00451186', 'n00452864', 'n00453126', 'n00453478', 'n00453935', 'n00454237', 'n00454395',
@@ -32,6 +35,11 @@ PET_IMAGES_IN_NOT_PET = [
     'n07806120', 'n08560295', 'n08616050', 'n08614632', 'n09290350', 'n09902353', 'n09967555', 'n10062594', 'n10185793',
     'n10186068', 'n10186143', 'n10186216', 'n10342893', 'n10530383', 'n10538733', 'n10538853', 'n10540252', 'n10722029',
     'n10802507', 'n12118414']
+
+# the wnids in 'not pet' category which contain images we want to enhance for training
+NOT_PET_IMAGES_ENHANCED = [
+    'n12102133', 'n07802026', 'n00007846', 'n02472987', 'n09918248', 'n09282208', 'n02849154', 'n03797896', 'n11508382',
+    'n02416880', 'n15019030', 'n02430045', 'n04183217']
 
 
 def _read_wnid_list(imagenet_folder):
@@ -83,6 +91,13 @@ def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder)
         handle = tarfile.open(tar)
         files = handle.getmembers()
         random.shuffle(files)
+
+        if cls == 'N' and wnid in NOT_PET_IMAGES_ENHANCED:
+            avg_total = min(NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS, len(files))
+            avg_train = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN)), 1)
+            avg_val = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION)), 1)
+            # avg_test = max(avg_total - avg_train - avg_val, 1)
+
         index = 0
         dst_folder = ''
         for item in files:
