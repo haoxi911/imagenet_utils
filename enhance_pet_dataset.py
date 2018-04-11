@@ -26,7 +26,7 @@ OXFORD_DOG_CATEGORIES = [
 
 # the broken image files in oxford iiit pet dataset, see:
 # https://gist.github.com/haoxi911/c75b65a421620b7f8cb0523c3cd069f1
-BROKEN_IMAGE_FILES = [
+OXFORD_BROKEN_IMAGES = [
     'Egyptian_Mau_167.jpg', 'Egyptian_Mau_191.jpg', 'Egyptian_Mau_177.jpg', 'Egyptian_Mau_139.jpg',
     'Egyptian_Mau_14.jpg', 'Egyptian_Mau_129.jpg', 'Egyptian_Mau_186.jpg', 'Egyptian_Mau_145.jpg',
     'staffordshire_bull_terrier_2.jpg', 'staffordshire_bull_terrier_22.jpg', 'Abyssinian_5.jpg', 'Abyssinian_34.jpg']
@@ -63,8 +63,9 @@ def _import_oxford_dataset(cls, breeds, input_folder, output_folder):
                     os.makedirs(dst_folder)
             elif index >= avg_total:
                 break
-            shutil.copy(item, dst_folder)
-            print('  Copied file: %s' % item)
+            if os.path.basename(item) not in OXFORD_BROKEN_IMAGES:
+                shutil.copy(item, dst_folder)
+                print('  Copied file: %s' % item)
             index += 1
 
 
