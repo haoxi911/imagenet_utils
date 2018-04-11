@@ -162,7 +162,9 @@ def create_image_lists(image_dir):
   sub_dirs = [x for x in os.listdir(image_dir) if os.path.isdir(os.path.join(image_dir, x))]
   for sub_dir in sub_dirs:
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
-    training_files = validation_files = testing_files = []
+    training_files = []
+    validation_files = []
+    testing_files = []
     dir_name = os.path.basename(sub_dir)
     if dir_name == image_dir:
       continue
@@ -176,7 +178,9 @@ def create_image_lists(image_dir):
       testing_files.extend(gfile.Glob(file_glob))
 
     label_name = re.sub(r'[^a-z0-9]+', ' ', dir_name.lower())
-    training_images = validation_images = testing_images = []
+    training_images = []
+    validation_images = []
+    testing_images = []
     for file_name in training_files:
       base_name = os.path.basename(file_name)
       training_images.append('training/' + base_name)
