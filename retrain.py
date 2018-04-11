@@ -358,6 +358,8 @@ def create_bottleneck_file(bottleneck_path, image_lists, label_name, index,
                            bottleneck_tensor):
   """Create a single bottleneck file."""
   tf.logging.info('Creating bottleneck at ' + bottleneck_path)
+  if not os.path.exists(os.path.dirname(bottleneck_path)):
+    os.makedirs(os.path.dirname(bottleneck_path))
   image_path = get_image_path(image_lists, label_name, index,
                               image_dir, category)
   if not gfile.Exists(image_path):
