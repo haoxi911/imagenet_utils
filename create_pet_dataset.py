@@ -52,8 +52,15 @@ def _read_pet_list():
         return [rows[0] for rows in reader]  # if rows[3] == '' or rows[3] != 'N'
 
 
+def _read_person_list():
+    with open('imagenet-persons.csv', mode='r') as infile:
+        reader = csv.reader(infile)
+        return [rows[0] for rows in reader]
+
+
 def _read_not_pet_list(imagenet_folder):
-    return list(set(_read_wnid_list(imagenet_folder)) - set(_read_pet_list()) - set(PET_IMAGES_IN_NOT_PET))
+    return list(set(_read_wnid_list(imagenet_folder)) - set(_read_pet_list())
+                - set(_read_person_list()) - set(PET_IMAGES_IN_NOT_PET))
 
 
 def _read_pet_summary(imagenet_folder):
@@ -62,6 +69,11 @@ def _read_pet_summary(imagenet_folder):
         reader = csv.reader(infile)
         for row in reader:
             if row[3] != '' and row[3] != 'M' and row[3] != 'N':
+                summary.setdefault(row[3], {}).update({row[0]: row[1]})
+    with open('imagenet-persons.csv', mode='r') as infile:
+        reader = csv.reader(infile)
+        for row in reader:
+            if row[3] == 'P':
                 summary.setdefault(row[3], {}).update({row[0]: row[1]})
     for row in _read_not_pet_list(imagenet_folder):
         summary.setdefault('N', {}).update({row: 1})
