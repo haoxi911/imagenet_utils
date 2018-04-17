@@ -5,163 +5,170 @@ import math
 import random
 import shutil
 import tarfile
+import glob
 
+# This script will extract images from ImageNet and create a dataset with 9 classes:
+# B(birds) C(cats) D(dogs) F(fish) H(horse) P(persons) R(reptiles) SA(small animals) N(not pet)
+#
+# Some synsets need to be filtered out or enhanced while create the dataset. This includes:
+#
+# a) synsets which may include multiple type of classes:
+# n00523513  sport, athletics
+# n07805594  bird feed, bird food, birdseed
+# n07805731  petfood, pet-food, pet food
+# n08555333  stockbroker belt
+# n08182379  crowd
+# n05538625  head, caput
+# n03430959  gear, paraphernalia, appurtenance
+# n03538634  horse-drawn vehicle
+# n03217739  dogcart
+# n03218198  dogsled, dog sled, dog sleigh
+# n03610524  kennel, doghouse, dog house
+# n03745146  menagerie, zoo, zoological garden
+# n03981924  pony cart, ponycart, donkey cart, tub-cart
+# n04123740  saddle
+# n03993703  pound, dog pound
+# n08616050  pasture, pastureland, grazing land, lea, ley
+# n00015388  animal, animate being, beast, brute, creature, fauna
+# n01318894  animal, animate being, beast, brute, creature, fauna / pet
+#
+# b) synsets which contain person images:
+# n00007846  person, individual, someone, somebody, mortal, soul
+# n07942152  people
+# n04976952  complexion, skin color, skin colour
+# n13895262  belly
+# n06892775  concert
+# n08249459  concert band, military band
+# n08079613  baseball club, ball club, club, nine
+#
+# c) synsets which contain cat images:
+# n02121808   domestic cat, house cat, Felis domesticus, Felis catus
+#
+# d) synsets which contain do images:
+# n02084071   dog, domestic dog, Canis familiaris
+#
 
-# number of images for each pet category (e.g. cats, dogs, etc.)
-PET_IMAGES_PER_CLASS = 8000
+# number of images for positive category (e.g. cats, dogs, persons, etc.)
+POS_IMAGES_PER_CLASS = 10000
 
-# number of images for general 'not pet' category
-NOT_PET_IMAGES_TOTAL = 360000
-
-# number of images for each enhanced subclass in 'not pet' category
-NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS = 1000
+# number of images for negative category (i.e. not pet)
+NEG_IMAGES_PER_CLASS = 500000
 
 # how we split train / validation / test set.
-PERCENTAGE_FOR_TRAIN = 0.75
+PERCENTAGE_FOR_TRAIN = 0.6
 PERCENTAGE_FOR_VALIDATION = 0.2
-PERCENTAGE_FOR_TEST = 0.05
+PERCENTAGE_FOR_TEST = 0.2
 
-# the wnids in 'not pet' category but contain pet images
-PET_IMAGES_IN_NOT_PET = [
-    'n00005787', 'n00288000', 'n00288190', 'n00288384', 'n00440218', 'n00449977', 'n00450070', 'n00450335', 'n00450700',
-    'n00450866', 'n00450998', 'n00451186', 'n00452864', 'n00453126', 'n00453478', 'n00453935', 'n00454237', 'n00454395',
-    'n00454493', 'n01322508', 'n01519873', 'n01696633', 'n01697178', 'n01697457', 'n01698434', 'n01698640', 'n02010272',
-    'n02062430', 'n02062744', 'n02064816', 'n02065026', 'n02066245', 'n02068541', 'n02068974', 'n02069412', 'n02069701',
-    'n02069974', 'n02071294', 'n02071636', 'n02391234', 'n02391373', 'n02469248', 'n02900160', 'n02900459', 'n02900594',
-    'n02910864', 'n02912557', 'n02937958', 'n03217739', 'n03218198', 'n03352232', 'n03388711', 'n03410740', 'n03480719',
-    'n03480973', 'n03610524', 'n03638014', 'n03644378', 'n03651843', 'n03652932', 'n03745146', 'n03803284', 'n03831203',
-    'n03831382', 'n03959014', 'n03981924', 'n03993703', 'n04100519', 'n04215153', 'n04295353', 'n04353573', 'n04368840',
-    'n04486616', 'n04577567', 'n04593629', 'n04979002', 'n04979307', 'n07805594', 'n07805731', 'n07805966', 'n07806043',
-    'n07806120', 'n08560295', 'n08616050', 'n08614632', 'n09290350', 'n09902353', 'n09967555', 'n10062594', 'n10185793',
-    'n10186068', 'n10186143', 'n10186216', 'n10342893', 'n10530383', 'n10538733', 'n10538853', 'n10540252', 'n10722029',
-    'n10802507', 'n12118414']
+# number of images for each enhanced subclass in negative category
+NEG_IMAGES_ENHANCED_MIN = 1000
 
-# the wnids in 'not pet' category which contain images we want to enhance for training
-NOT_PET_IMAGES_ENHANCED = [
+# the wnids in negative category which contain images we want to enhance for training
+# https://docs.google.com/spreadsheets/d/1m3ODqTe-qwutwwYhFmekQnuXN3WajOXrfAzIH_c19Ec/edit#gid=1618404554
+NEG_IMAGES_ENHANCED = [
     'n12102133', 'n07802026', 'n00007846', 'n02472987', 'n09918248', 'n09282208', 'n02849154', 'n03797896', 'n11508382',
     'n02416880', 'n15019030', 'n02430045', 'n04183217']
 
 
-def _read_wnid_list(imagenet_folder):
+def _read_wnid_full(imagenet_folder):
     return [name[:9] for name in os.listdir(imagenet_folder)]
 
 
-def _read_pet_list():
-    with open('imagenet-animals.csv', mode='r') as infile:
-        reader = csv.reader(infile)
-        return [rows[0] for rows in reader]  # if rows[3] == '' or rows[3] != 'N'
+def _read_wnid_folder(path, d=''):
+    wnids = []
+    files = glob.glob(os.path.join(path, '*.csv'))
+    for f in files:
+        with open(f, mode='r') as infile:
+            reader = csv.reader(infile)
+            wnids.extend([rows[0] for rows in reader if len(d) <= 0 or (len(rows) > 3 and rows[3] == d)])
+    return wnids
 
 
-def _read_person_list():
-    with open('imagenet-persons.csv', mode='r') as infile:
+def _read_wnid_animals():
+    with open('./synsets/imagenet-animals.csv', mode='r') as infile:
         reader = csv.reader(infile)
         return [rows[0] for rows in reader]
 
 
-def _read_not_pet_list(imagenet_folder):
-    return list(set(_read_wnid_list(imagenet_folder)) - set(_read_pet_list())
-                - set(_read_person_list()) - set(PET_IMAGES_IN_NOT_PET))
+def _read_negative_list(imagenet_folder):
+    return list(set(_read_wnid_full(imagenet_folder)) - set(_read_wnid_folder('./synsets/mixed'))
+                - set(_read_wnid_folder('./synsets/person')) - set(_read_wnid_animals()))
 
 
-def _read_pet_summary(imagenet_folder):
+def _read_dataset_summary(imagenet_folder):
     summary = {}
-    with open('imagenet-animals.csv', mode='r') as infile:
+    summary.setdefault('B', _read_wnid_folder('./synsets/bird', 'B'))
+    summary.setdefault('C', _read_wnid_folder('./synsets/cat', 'C'))
+    summary.setdefault('D', _read_wnid_folder('./synsets/dog', 'D'))
+    summary.setdefault('P', _read_wnid_folder('./synsets/person', 'P'))
+    with open('./synsets/imagenet-animals.csv', mode='r') as infile:
         reader = csv.reader(infile)
         for row in reader:
-            if row[3] != '' and row[3] != 'M' and row[3] != 'N':
-                summary.setdefault(row[3], {}).update({row[0]: row[1]})
-    with open('imagenet-persons.csv', mode='r') as infile:
-        reader = csv.reader(infile)
-        for row in reader:
-            if row[3] == 'P':
-                summary.setdefault(row[3], {}).update({row[0]: row[1]})
-    for row in _read_not_pet_list(imagenet_folder):
-        summary.setdefault('N', {}).update({row: 1})
+            if len(row) > 3 and row[3] in ['F', 'H', 'R', 'SA']:
+                summary.setdefault(row[3], []).append(row[0])
+    summary.setdefault('N', _read_negative_list(imagenet_folder))
     return summary
 
 
-def _copy_images_for_class(cls, dic, copy_total, imagenet_folder, output_folder):
-    if cls != 'N':
-        total = 0
-        for wnid, imgs in dic.iteritems():
-            total += int(imgs)
-        print('- Class: {:5s} Subclasses: {:5d}   Images: {:8d}'.format(cls, len(dic), total))
-    else:
-        print('- Class: {:5s} Subclasses: {:5d} '.format(cls, len(dic)))
+def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder):
+    print('- Class: {:5s} Subclasses: {:5d} '.format(cls, len(ids)))
 
-    avg_total = int(math.ceil(float(copy_total) / len(dic)))
-    avg_train = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_TRAIN)), 1)
-    avg_val = max(int(math.ceil(float(avg_total) * PERCENTAGE_FOR_VALIDATION)), 1)
-    avg_test = max(avg_total - avg_train - avg_val, 1)
+    avg_total = int(math.floor(float(copy_total) / len(ids)))
+    avg_train = int(math.floor(float(avg_total) * PERCENTAGE_FOR_TRAIN))
+    avg_val = int(math.floor(float(avg_total) * PERCENTAGE_FOR_VALIDATION))
+    avg_test = int(math.floor(float(avg_total) * PERCENTAGE_FOR_TEST))
     avg_total = avg_train + avg_val + avg_test
-
+    assert avg_train > 10 and avg_val > 10 and avg_test > 10
     print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
           .format(avg_total, avg_train, avg_val, avg_test))
 
-    for wnid in dic:
+    for wnid in ids:
         tar = os.path.join(imagenet_folder, wnid + '.tar')
         handle = tarfile.open(tar)
         files = handle.getmembers()
-        random.shuffle(files)
+        if len(files) > 10:
+            random.shuffle(files)
+            copy_total = min(len(files), avg_total)
+            if cls == 'N' and wnid in NEG_IMAGES_ENHANCED:
+                copy_total = min(NEG_IMAGES_ENHANCED_MIN, len(files))
+            copy_train = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TRAIN))
+            copy_val = int(math.floor(float(copy_total) * PERCENTAGE_FOR_VALIDATION))
+            copy_test = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TEST))
 
-        copy_total = avg_total
-        copy_train = avg_train
-        copy_val = avg_val
-        if cls == 'N' and wnid in NOT_PET_IMAGES_ENHANCED:
-            copy_total = min(NOT_PET_IMAGES_ENHANCED_PER_SUBCLASS, len(files))
-            copy_train = max(int(math.ceil(float(copy_total) * PERCENTAGE_FOR_TRAIN)), 1)
-            copy_val = max(int(math.ceil(float(copy_total) * PERCENTAGE_FOR_VALIDATION)), 1)
-            copy_test = max(copy_total - copy_train - copy_val, 1)
-            copy_total = copy_train + copy_val + copy_test
-
-        index = 0
-        dst_folder = ''
-        for item in files:
-            if index == 0:
-                dst_folder = os.path.join(output_folder, cls, 'training')
-                if not os.path.exists(dst_folder):
-                    os.makedirs(dst_folder)
-            elif index == copy_train:
-                dst_folder = os.path.join(output_folder, cls, 'validation')
-                if not os.path.exists(dst_folder):
-                    os.makedirs(dst_folder)
-            elif index == copy_train + copy_val:
-                dst_folder = os.path.join(output_folder, cls, 'testing')
-                if not os.path.exists(dst_folder):
-                    os.makedirs(dst_folder)
-            elif index >= copy_total:
-                break
-            handle.extract(item, dst_folder)
-            print('  Extracted file: %s' % item.name)
-            index += 1
+            index = 0
+            dst_folder = ''
+            for item in files:
+                if index == 0:
+                    dst_folder = os.path.join(output_folder, cls, 'training')
+                    if not os.path.exists(dst_folder):
+                        os.makedirs(dst_folder)
+                elif index == copy_train:
+                    dst_folder = os.path.join(output_folder, cls, 'validation')
+                    if not os.path.exists(dst_folder):
+                        os.makedirs(dst_folder)
+                elif index == copy_train + copy_val:
+                    dst_folder = os.path.join(output_folder, cls, 'testing')
+                    if not os.path.exists(dst_folder):
+                        os.makedirs(dst_folder)
+                elif index >= copy_train + copy_val + copy_test:
+                    break
+                handle.extract(item, dst_folder)
+                print('  Extracted file: %s' % item.name)
+                index += 1
         handle.close()
 
 
-def _copy_images(cls, dic, imagenet_folder, output_folder):
+def _copy_images(cls, ids, imagenet_folder, output_folder):
     if key != 'N':
-        _copy_images_for_class(cls, dic, PET_IMAGES_PER_CLASS, imagenet_folder, output_folder)
+        _copy_images_for_class(cls, ids, POS_IMAGES_PER_CLASS, imagenet_folder, output_folder)
     else:
-        _copy_images_for_class(cls, dic, NOT_PET_IMAGES_TOTAL, imagenet_folder, output_folder)
-
-
-def _clean_up(output_folder):
-    dic = {
-        'n01640846_9466.JPEG': 'R',
-        'n04155068_537.JPEG': 'N',
-        'n12757303_3302.JPEG': 'N'
-    }
-    # delete some broken images
-    for name, folder in dic.iteritems():
-        path = os.path.join(output_folder, folder, name)
-        if os.path.exists(path):
-            os.remove(path)
+        _copy_images_for_class(cls, ids, NEG_IMAGES_PER_CLASS, imagenet_folder, output_folder)
 
 
 if __name__ == '__main__':
     if not (len(sys.argv) == 3 or len(sys.argv) == 4):
         print("Usage: create_pet_dataset.py imagenet_folder output_folder")
     else:
-        summary = _read_pet_summary(sys.argv[1])
+        summary = _read_dataset_summary(sys.argv[1])
         if len(sys.argv) == 3:
             if os.path.exists(sys.argv[2]):
                 shutil.rmtree(sys.argv[2])
@@ -174,4 +181,3 @@ if __name__ == '__main__':
                         shutil.rmtree(os.path.join(sys.argv[2], key))
                     _copy_images(key, summary[key], sys.argv[1], sys.argv[2])
                     break
-        _clean_up(sys.argv[2])
