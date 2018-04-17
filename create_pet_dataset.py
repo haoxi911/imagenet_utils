@@ -117,7 +117,7 @@ def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder)
     avg_val = int(math.floor(float(avg_total) * PERCENTAGE_FOR_VALIDATION))
     avg_test = int(math.floor(float(avg_total) * PERCENTAGE_FOR_TEST))
     avg_total = avg_train + avg_val + avg_test
-    assert avg_train > 8 and avg_val > 8 and avg_test > 8
+    assert avg_train >= 8 and avg_val >= 8 and avg_test >= 8
     print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
           .format(avg_total, avg_train, avg_val, avg_test))
 
@@ -125,7 +125,7 @@ def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder)
         tar = os.path.join(imagenet_folder, wnid + '.tar')
         handle = tarfile.open(tar)
         files = handle.getmembers()
-        if len(files) > 8:
+        if len(files) >= 8:
             random.shuffle(files)
             copy_total = min(len(files), avg_total)
             if cls == 'N' and wnid in NEG_IMAGES_ENHANCED:
