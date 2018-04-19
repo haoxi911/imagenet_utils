@@ -72,16 +72,16 @@ import glob
 #
 # 3) the following categories will be created:
 #
-# *bird*
+# *birds*
 # n01503061 bird
 # n01613615 young bird
 #
-# *cat*
+# *cats*
 # n02121808 domestic cat, house cat, Felis domesticus, Felis catus
 # n02121620 cat, true cat
 # n02122948 kitten, kitty
 #
-# *dog*
+# *dogs*
 # n02084071 dog, domestic dog, Canis familiaris
 # n02115335 wild dog
 # n02083672 bitch
@@ -90,26 +90,26 @@ import glob
 # *fish*
 # n02512053 fish
 #
-# *goat*
-# n02418064 goat antelope (5)
-# n02411206 musk ox, musk sheep, Ovibos moschatus (0)
-# n02419796 antelope (33)
-# n02411705 sheep (15)
+# *goats*
+# n02418064 goat antelope
+# n02411206 musk ox, musk sheep, Ovibos moschatus
+# n02419796 antelope
+# n02411705 sheep
 # n02428842 forest goat, spindle horn, Pseudoryx nghetinhensis
 #
-# *horse*
+# *horses*
 # n02374451 horse, Equus caballus
 # n02376542 foal
 #
-# *reptile*
+# *reptiles*
 # n01661091 reptile, reptilian
 #
-# *small animal*
+# *small animals*
 # n02342885 hamster
-# n02364520 cavy (2)
-# n02367492 chinchilla, Chinchilla laniger (0)
+# n02364520 cavy
+# n02367492 chinchilla, Chinchilla laniger
 #
-# *person*
+# *persons*
 # n00007846  person, individual, someone, somebody, mortal, soul
 # n07942152  people
 # n04976952  complexion, skin color, skin colour
