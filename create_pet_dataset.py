@@ -7,32 +7,109 @@ import shutil
 import tarfile
 import glob
 
-# This script will extract images from ImageNet and create a dataset with 9 classes:
-# B(birds) C(cats) D(dogs) F(fish) H(horse) P(persons) R(reptiles) SA(small animals) N(not pet)
+# This script builds a Mobilenet `pet` dataset using ImageNet data.
 #
-# Some synsets need to be filtered out or enhanced while create the dataset. This includes:
 #
-# a) synsets which may include multiple type of classes:
-# n00523513  sport, athletics
-# n07805594  bird feed, bird food, birdseed
-# n07805731  petfood, pet-food, pet food
-# n08555333  stockbroker belt
-# n08182379  crowd
-# n05538625  head, caput
-# n03430959  gear, paraphernalia, appurtenance
-# n03538634  horse-drawn vehicle
-# n03217739  dogcart
-# n03218198  dogsled, dog sled, dog sleigh
-# n03610524  kennel, doghouse, dog house
-# n03745146  menagerie, zoo, zoological garden
-# n03981924  pony cart, ponycart, donkey cart, tub-cart
-# n04123740  saddle
-# n03993703  pound, dog pound
-# n08616050  pasture, pastureland, grazing land, lea, ley
-# n00015388  animal, animate being, beast, brute, creature, fauna
-# n01318894  animal, animate being, beast, brute, creature, fauna / pet
+# 1) the following wnids (and child nodes) will be excluded:
 #
-# b) synsets which contain person images:
+# n00523513 sport, athletics
+# n07805594 bird feed, bird food, birdseed
+# n07805731 petfood, pet-food, pet food
+# n08555333 stockbroker belt
+# n08182379 crowd
+# n05538625 head, caput
+# n03430959 gear, paraphernalia, appurtenance
+# n03538634 horse-drawn vehicle
+# n03217739 dogcart
+# n03538406 horse cart, horse-cart
+# n03351434 fishing gear, tackle, fishing tackle, fishing rig, rig
+# n04124202 saddle blanket, saddlecloth, horse blanket
+# n03539678 horse-trail
+# n00450070 horse racing
+# n04294879 stable, stalls, horse barn
+# n03538037 horse, gymnastic horse
+# n03218198 dogsled, dog sled, dog sleigh
+# n03610524 kennel, doghouse, dog house
+# n03745146 menagerie, zoo, zoological garden
+# n03981924 pony cart, ponycart, donkey cart, tub-cart
+# n04123740 saddle
+# n03993703 pound, dog pound
+# n08616050 pasture, pastureland, grazing land, lea, ley
+# n00015388 animal, animate being, beast, brute, creature, fauna
+# n01318894 animal, animate being, beast, brute, creature, fauna / pet
+# n02982515 cat box
+# n05217859 body, dead body
+# n02843553 bird feeder, birdfeeder, feeder
+# n07805966 dog food
+# n03993703 pound, dog pound
+# n02936714 enclosure
+# n03610524 kennel, doghouse, dog house
+# n09972661 cowboy, cowpuncher, puncher, cowman, cattleman, cowpoke, cowhand, cowherd
+# n10186068 horse trader
+# n03920641 pet shop
+# n10171567 herder, herdsman, drover
+# n03376159 fold, sheepfold, sheep pen, sheepcote
+#
+#
+# 2) the following wnids (and child nodes) will be enhanced:
+#
+# n02127808 big cat, cat
+# n12102133 grass
+# n07802026 hay
+# n09282208 floor
+# n02849154 blanket, cover
+# n02821030 bed linen
+# n03797896 mulch
+# n11508382 snow, snowfall
+# n02416519 goat, caprine animal
+# n14844693 soil, dirt
+# n02430045 deer, cervid
+# n04118021 rug, carpet, carpeting
+# n03476083 hairpiece, false hair, postiche
+# n02818832 bed
+# n04143897 scarf
+#
+#
+# 3) the following categories will be created:
+#
+# *bird*
+# n01503061 bird
+# n01613615 young bird
+#
+# *cat*
+# n02121808 domestic cat, house cat, Felis domesticus, Felis catus
+# n02121620 cat, true cat
+# n02122948 kitten, kitty
+#
+# *dog*
+# n02084071 dog, domestic dog, Canis familiaris
+# n02115335 wild dog
+# n02083672 bitch
+# n01322343 pup, whelp
+#
+# *fish*
+# n02512053 fish
+#
+# *goat*
+# n02418064 goat antelope (5)
+# n02411206 musk ox, musk sheep, Ovibos moschatus (0)
+# n02419796 antelope (33)
+# n02411705 sheep (15)
+# n02428842 forest goat, spindle horn, Pseudoryx nghetinhensis
+#
+# *horse*
+# n02374451 horse, Equus caballus
+# n02376542 foal
+#
+# *reptile*
+# n01661091 reptile, reptilian
+#
+# *small animal*
+# n02342885 hamster
+# n02364520 cavy (2)
+# n02367492 chinchilla, Chinchilla laniger (0)
+#
+# *person*
 # n00007846  person, individual, someone, somebody, mortal, soul
 # n07942152  people
 # n04976952  complexion, skin color, skin colour
@@ -41,12 +118,7 @@ import glob
 # n08249459  concert band, military band
 # n08079613  baseball club, ball club, club, nine
 #
-# c) synsets which contain cat images:
-# n02121808   domestic cat, house cat, Felis domesticus, Felis catus
-#
-# d) synsets which contain do images:
-# n02084071   dog, domestic dog, Canis familiaris
-#
+
 
 # number of images for positive category (e.g. cats, dogs, persons, etc.)
 POS_IMAGES_PER_CLASS = 10000
