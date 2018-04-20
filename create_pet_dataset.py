@@ -9,8 +9,104 @@ import glob
 
 # This script builds a Mobilenet `pet` dataset using ImageNet data.
 #
+# 1) the following pet categories will be built from listed sources:
 #
-# 1) the following wnids (and child nodes) will be excluded:
+# *bird*
+# n01503061 bird
+# n01613615 young bird
+#
+# *cat*
+# n02121808 domestic cat, house cat, Felis domesticus, Felis catus
+# n02121620 cat, true cat
+# n02122948 kitten, kitty
+#
+# *dog*
+# n02084071 dog, domestic dog, Canis familiaris
+# n02115335 wild dog
+# n02083672 bitch
+# n01322343 pup, whelp
+#
+# *fish*
+# n02512053 fish
+
+# *horse*
+# n02374451 horse, Equus caballus
+# n02376542 foal
+#
+# *reptile*
+# n01661091 reptile, reptilian
+#
+# *small animals*
+# n02342885 hamster
+# n02364520 cavy
+# n02367492 chinchilla, Chinchilla laniger
+#
+# 2) the following not-pet categories will be built from listed sources:
+#
+# *bed linen*
+# n02821030 bed linen
+#
+# *blanket*
+# n02849154 blanket, cover
+#
+# *car*
+# n02958343 car, auto, automobile, machine, motorcar
+# n02959942 car, railcar, railway car, railroad car
+#
+# *carpet*
+# n04118021 rug, carpet, carpeting
+#
+# *dirt*
+# n14844693 soil, dirt
+#
+# *fence*
+# n03327234 fence, fencing
+#
+# *field*
+# n08569998 field
+#
+# *goat*
+# n02418064 goat antelope
+# n02419796 antelope
+# n02411705 sheep
+# n02428842 forest goat, spindle horn, Pseudoryx nghetinhensis
+#
+# *grass*
+# n12102133 grass
+#
+# *hay*
+# n07802026 hay
+#
+# *human hair*
+# n05256862 hairdo, hairstyle, hair style, coiffure, coif
+# n03476083 hairpiece, false hair, postiche
+#
+# *mulch*
+# n03797896 mulch
+#
+# *person*
+# n00007846  person, individual, someone, somebody, mortal, soul
+# n07942152  people
+# n04976952  complexion, skin color, skin colour
+# n13895262  belly
+# n06892775  concert
+# n08249459  concert band, military band
+# n08079613  baseball club, ball club, club, nine
+#
+# *scarf*
+# n04143897 scarf
+#
+# *snow*
+# n11508382 snow, snowfall
+#
+# *toy animals*
+# n03964744 plaything, toy
+# n02085374 toy dog, toy
+#
+# *truck*
+# n04490091 truck, motortruck
+#
+# 3) the following categories will always be excluded (TBD):
 #
 # n00523513 sport, athletics
 # n07805594 bird feed, bird food, birdseed
@@ -50,98 +146,25 @@ import glob
 # n10171567 herder, herdsman, drover
 # n03376159 fold, sheepfold, sheep pen, sheepcote
 #
-#
-# 2) the following wnids (and child nodes) will be enhanced:
-#
-# n02127808 big cat, cat
-# n12102133 grass
-# n07802026 hay
-# n09282208 floor
-# n02849154 blanket, cover
-# n02821030 bed linen
-# n03797896 mulch
-# n11508382 snow, snowfall
-# n02416519 goat, caprine animal
-# n14844693 soil, dirt
-# n02430045 deer, cervid
-# n04118021 rug, carpet, carpeting
-# n03476083 hairpiece, false hair, postiche
-# n02818832 bed
-# n04143897 scarf
-#
-#
-# 3) the following categories will be created:
-#
-# *birds*
-# n01503061 bird
-# n01613615 young bird
-#
-# *cats*
-# n02121808 domestic cat, house cat, Felis domesticus, Felis catus
-# n02121620 cat, true cat
-# n02122948 kitten, kitty
-#
-# *dogs*
-# n02084071 dog, domestic dog, Canis familiaris
-# n02115335 wild dog
-# n02083672 bitch
-# n01322343 pup, whelp
-#
-# *fish*
-# n02512053 fish
-#
-# *goats*
-# n02418064 goat antelope
-# n02411206 musk ox, musk sheep, Ovibos moschatus
-# n02419796 antelope
-# n02411705 sheep
-# n02428842 forest goat, spindle horn, Pseudoryx nghetinhensis
-#
-# *horses*
-# n02374451 horse, Equus caballus
-# n02376542 foal
-#
-# *reptiles*
-# n01661091 reptile, reptilian
-#
-# *small animals*
-# n02342885 hamster
-# n02364520 cavy
-# n02367492 chinchilla, Chinchilla laniger
-#
-# *persons*
-# n00007846  person, individual, someone, somebody, mortal, soul
-# n07942152  people
-# n04976952  complexion, skin color, skin colour
-# n13895262  belly
-# n06892775  concert
-# n08249459  concert band, military band
-# n08079613  baseball club, ball club, club, nine
-#
 
+# the positive categories
+POS_IMAGE_CATEGORIES = [
+    'bird', 'cat', 'dog', 'fish', 'horse', 'reptile', 'small animals'
+]
 
-# number of images for positive category (e.g. cats, dogs, persons, etc.)
-POS_IMAGES_PER_CLASS = 10000
+# number of images for positive category (e.g. cats, dogs, etc.)
+POS_IMAGES_PER_CLASS = 5000
 
-# number of images for negative category (i.e. not pet)
-NEG_IMAGES_PER_CLASS = 500000
+# number of images for negative category (i.e. others)
+NEG_IMAGES_PER_CLASS = 3000
 
 # how we split train / validation / test set.
-PERCENTAGE_FOR_TRAIN = 0.6
+PERCENTAGE_FOR_TRAIN = 0.7
 PERCENTAGE_FOR_VALIDATION = 0.2
-PERCENTAGE_FOR_TEST = 0.2
-
-# number of images for each enhanced subclass in negative category
-NEG_IMAGES_ENHANCED_MIN = 1000
+PERCENTAGE_FOR_TEST = 0.1
 
 # minimum number of images for each subclass in dataset
 SUBCLASS_IMAGES_MIN = 6
-
-# the wnids in negative category which contain images we want to enhance for training
-# https://docs.google.com/spreadsheets/d/1m3ODqTe-qwutwwYhFmekQnuXN3WajOXrfAzIH_c19Ec/edit#gid=1618404554
-NEG_IMAGES_ENHANCED = [
-    'n12102133', 'n07802026', 'n00007846', 'n02472987', 'n09918248', 'n09282208', 'n02849154', 'n03797896', 'n11508382',
-    'n02416880', 'n15019030', 'n02430045', 'n04183217']
 
 
 def _read_wnid_full(imagenet_folder):
@@ -149,45 +172,42 @@ def _read_wnid_full(imagenet_folder):
 
 
 def _read_wnid_folder(path, d=''):
-    wnids = []
+    wnids = {}
     files = glob.glob(os.path.join(path, '*.csv'))
     for f in files:
         with open(f, mode='r') as infile:
             reader = csv.reader(infile)
-            wnids.extend([rows[0] for rows in reader if len(d) <= 0 or (len(rows) > 3 and rows[3] == d)])
+            wnids.update({rows[0]: rows[1] for rows in reader if len(d) <= 0 or (len(rows) > 3 and rows[3] == d)})
     return wnids
-
-
-def _read_wnid_animals():
-    with open('./synsets/imagenet-animals.csv', mode='r') as infile:
-        reader = csv.reader(infile)
-        return [rows[0] for rows in reader]
-
-
-def _read_negative_list(imagenet_folder):
-    return list(set(_read_wnid_full(imagenet_folder)) - set(_read_wnid_folder('./synsets/mixed'))
-                - set(_read_wnid_folder('./synsets/person')) - set(_read_wnid_animals()))
 
 
 def _read_dataset_summary(imagenet_folder):
     summary = {}
-    summary.setdefault('B', _read_wnid_folder('./synsets/bird', 'B'))
-    summary.setdefault('C', _read_wnid_folder('./synsets/cat', 'C'))
-    summary.setdefault('D', _read_wnid_folder('./synsets/dog', 'D'))
-    summary.setdefault('P', _read_wnid_folder('./synsets/person', 'P'))
-    with open('./synsets/imagenet-animals.csv', mode='r') as infile:
-        reader = csv.reader(infile)
-        for row in reader:
-            if len(row) > 3 and row[3] in ['F', 'H', 'R', 'SA']:
-                summary.setdefault(row[3], []).append(row[0])
-    summary.setdefault('N', _read_negative_list(imagenet_folder))
+
+    # the pet categories we're interested in.
+    for folder in POS_IMAGE_CATEGORIES:
+        mask = ""
+        for i in folder.upper().split():
+            mask += i[0]
+        summary.setdefault(folder, _read_wnid_folder(os.path.join('./synsets', folder), mask))
+
+    # the not-pet categories.
+    for folder in os.listdir('./synsets/others'):
+        if os.path.isdir(os.path.join('./synsets/others', folder)):
+            summary.setdefault(folder, _read_wnid_folder(os.path.join('./synsets/others', folder), 'X'))
+
     return summary
 
 
-def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder):
-    print('- Class: {:5s} Subclasses: {:5d} '.format(cls, len(ids)))
+def _copy_images_for_class(cls, rows, copy_total, imagenet_folder, output_folder):
+    total = 0
+    for wnid, count in rows.iteritems():
+        total += int(float(count))
+    print('- Class: {:5s} Subclasses: {:5d} Total: {:8d}'.format(cls, len(rows), total))
 
-    avg_total = int(math.floor(float(copy_total) / len(ids)))
+    if total < copy_total:
+        copy_total = total
+    avg_total = int(math.floor(float(copy_total) / len(rows)))
     avg_train = int(math.floor(float(avg_total) * PERCENTAGE_FOR_TRAIN))
     avg_val = int(math.floor(float(avg_total) * PERCENTAGE_FOR_VALIDATION))
     avg_test = int(math.floor(float(avg_total) * PERCENTAGE_FOR_TEST))
@@ -196,15 +216,13 @@ def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder)
     print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
           .format(avg_total, avg_train, avg_val, avg_test))
 
-    for wnid in ids:
+    for wnid, length in rows.iteritems():
         tar = os.path.join(imagenet_folder, wnid + '.tar')
         handle = tarfile.open(tar)
         files = handle.getmembers()
         if len(files) >= SUBCLASS_IMAGES_MIN:
             random.shuffle(files)
-            copy_total = min(len(files), avg_total)
-            if cls == 'N' and wnid in NEG_IMAGES_ENHANCED:
-                copy_total = min(NEG_IMAGES_ENHANCED_MIN, len(files))
+            copy_total = min(length, avg_total)
             copy_train = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TRAIN))
             copy_val = int(math.floor(float(copy_total) * PERCENTAGE_FOR_VALIDATION))
             copy_test = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TEST))
@@ -232,11 +250,11 @@ def _copy_images_for_class(cls, ids, copy_total, imagenet_folder, output_folder)
         handle.close()
 
 
-def _copy_images(cls, ids, imagenet_folder, output_folder):
-    if key != 'N':
-        _copy_images_for_class(cls, ids, POS_IMAGES_PER_CLASS, imagenet_folder, output_folder)
+def _copy_images(cls, dic, imagenet_folder, output_folder):
+    if key in POS_IMAGE_CATEGORIES:
+        _copy_images_for_class(cls, dic, POS_IMAGES_PER_CLASS, imagenet_folder, output_folder)
     else:
-        _copy_images_for_class(cls, ids, NEG_IMAGES_PER_CLASS, imagenet_folder, output_folder)
+        _copy_images_for_class(cls, dic, NEG_IMAGES_PER_CLASS, imagenet_folder, output_folder)
 
 
 if __name__ == '__main__':
