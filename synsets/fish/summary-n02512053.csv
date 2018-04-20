@@ -28,11 +28,11 @@ n02664285,349,"European sole, Solea solea",F
 n02571810,137,"catalufa, Priacanthus arenatus",F
 n01480516,62,"cartilaginous fish, chondrichthian",-
 n01495493,1008,"angel shark, angelfish, Squatina squatina, monkfish",F
-n02586238,5,"bolti, Tilapia nilotica",F
+n02586238,5,"bolti, Tilapia nilotica",-
 n01441425,447,shiner,-
 n02608996,48,"puddingwife, pudding-wife, Halicoeres radiatus",F
-n02539573,6,"cisco, lake herring, Coregonus artedi",F
-n02601921,5,"white mullet, Mugil curema",F
+n02539573,6,"cisco, lake herring, Coregonus artedi",-
+n02601921,5,"white mullet, Mugil curema",-
 n02583890,1191,tetra,-
 n02538216,1131,"brook trout, speckled trout, Salvelinus fontinalis",F
 n02627835,498,bonito,-
@@ -44,7 +44,7 @@ n02628259,149,"Chile bonito, Chilean bonito, Pacific bonito, Sarda chiliensis",F
 n02526121,953,eel,-
 n02559144,3,brotula,-
 n02570164,805,"jewfish, Mycteroperca bonaci",F
-n02600503,6,"red goatfish, Mullus auratus",F
+n02600503,6,"red goatfish, Mullus auratus",-
 n01496331,967,"electric ray, crampfish, numbfish, torpedo",-
 n01484447,97,"longfin mako, Isurus paucus",F
 n02537716,1319,sea trout,-
@@ -92,7 +92,7 @@ n02576906,951,"crevalle jack, jack crevalle, Caranx hippos",F
 n02563648,885,"pumpkinseed, Lepomis gibbosus",F
 n02597972,175,"northern whiting, Menticirrhus saxatilis",F
 n02561514,1042,"muskellunge, Esox masquinongy",F
-n01501641,4,"grey skate, gray skate, Raja batis",F
+n01501641,4,"grey skate, gray skate, Raja batis",-
 n01484562,341,"bonito shark, blue pointed, Isurus glaucus",F
 n02656670,1013,"ocean sunfish, sunfish, mola, headfish",-
 n02650413,230,"tub gurnard, yellow gurnard, Trigla lucerna",F
@@ -131,7 +131,7 @@ n02602405,175,"silversides, silverside",-
 n02543255,2,lanternfish,-
 n02531625,317,"menhaden, Brevoortia tyrannis",F
 n01499732,298,"cownose ray, cow-nosed ray, Rhinoptera bonasus",F
-n02589796,1,"pompon, black margate, Anisotremus surinamensis",
+n02589796,1,"pompon, black margate, Anisotremus surinamensis",-
 n02597608,1141,kingfish,-
 n01493146,979,"whitetip shark, reef whitetip shark, Triaenodon obseus",F
 n02646892,163,lumpsucker,-
@@ -144,7 +144,7 @@ n01455461,26,"ten-spined stickleback, Gasterosteus pungitius",F
 n02606384,1348,"damselfish, demoiselle",-
 n02601344,586,"mullet, grey mullet, gray mullet",-
 n02639087,780,"bowfin, grindle, dogfish, Amia calva",F
-n01502101,2,"barndoor skate, Raja laevis",
+n01502101,2,"barndoor skate, Raja laevis",-
 n02522722,259,"Atlantic cod, Gadus morhua",F
 n02638596,14,"ganoid, ganoid fish",-
 n02618513,2,"sand lance, sand launce, sand eel, launce",-
@@ -185,9 +185,9 @@ n02611561,683,jawfish,-
 n01494757,376,"smooth hammerhead, Sphyrna zygaena",F
 n02641379,1019,"gar, garfish, garpike, billfish, Lepisosteus osseus",F
 n02579928,1172,"permit, Trachinotus falcatus",F
-n02546627,6,"dealfish, Trachipterus arcticus",F
+n02546627,6,"dealfish, Trachipterus arcticus",-
 n02579303,1090,"kingfish, Seriola grandis",F
-n01501777,5,"little skate, Raja erinacea",F
+n01501777,5,"little skate, Raja erinacea",-
 n01448594,1112,"guppy, rainbow fish, Lebistes reticulatus",F
 n01450950,286,"reef squirrelfish, Holocentrus coruscus",F
 n02575325,168,"sharksucker, Echeneis naucrates",F
@@ -197,7 +197,7 @@ n02545841,166,"opah, moonfish, Lampris regius",F
 n01448291,1060,"swordtail, helleri, topminnow, Xyphophorus helleri",F
 n02535759,1216,"landlocked salmon, lake salmon",-
 n02561803,373,"chain pickerel, chain pike, Esox niger",F
-n02593679,2,"scup, southern porgy, southern scup, Stenotomus aculeatus",
+n02593679,2,"scup, southern porgy, southern scup, Stenotomus aculeatus",-
 n02639605,948,"paddlefish, duckbill, Polyodon spathula",F
 n02532272,129,"Atlantic herring, Clupea harengus harengus",F
 n02536456,1316,"chinook, chinook salmon, king salmon, quinnat salmon, Oncorhynchus tshawytscha",F
@@ -222,7 +222,7 @@ n02581957,930,"dolphinfish, dolphin, mahimahi",-
 n02662993,272,"brill, Scophthalmus rhombus",-
 n02530999,616,"allice shad, allis shad, allice, allis, Alosa alosa",F
 n02611898,79,stargazer,-
-n02613820,6,"Molly Miller, Scartella cristata",F
+n02613820,6,"Molly Miller, Scartella cristata",-
 n02557749,1184,"walleye, walleyed pike, jack salmon, dory, Stizostedion vitreum",F
 n02610066,927,"tautog, blackfish, Tautoga onitis",F
 n02625612,1094,Spanish mackerel,-
@@ -236,23 +236,23 @@ n02525382,742,"cusk, torsk, Brosme brosme",F
 n02595339,330,"silver perch, mademoiselle, Bairdiella chrysoura",F
 n02513248,361,rough fish,-
 n02613181,636,"blenny, combtooth blenny",-
-n02627037,3,"albacore, long-fin tunny, Thunnus alalunga",F
+n02627037,3,"albacore, long-fin tunny, Thunnus alalunga",-
 n02513939,284,spawner,-
 n02598573,1033,"white croaker, chenfish, kingfish, Genyonemus lineatus",F
 n02522399,642,"cod, codfish",-
-n02613572,6,"shanny, Blennius pholis",F
+n02613572,6,"shanny, Blennius pholis",-
 n02622955,118,"cutlassfish, frost fish, hairtail",-
 n02515713,40,"coelacanth, Latimeria chalumnae",-
 n02569631,47,"rock hind, Epinephelus adscensionis",F
-n02608284,2,"pigfish, giant pigfish, Achoerodus gouldii",
+n02608284,2,"pigfish, giant pigfish, Achoerodus gouldii",-
 n02653497,615,"queen triggerfish, Bessy cerca, oldwench, oldwife, Balistes vetula",F
-n02615298,2,"rock gunnel, butterfish, Pholis gunnellus",
-n02664642,1,"English sole, lemon sole, Parophrys vitulus",
+n02615298,2,"rock gunnel, butterfish, Pholis gunnellus",-
+n02664642,1,"English sole, lemon sole, Parophrys vitulus",-
 n01439121,635,"cyprinid, cyprinid fish",-
 n02563792,1046,"bluegill, Lepomis macrochirus",F
 n02512938,1011,food fish,-
 n02539424,248,"lake whitefish, Coregonus clupeaformis",F
-n02622547,1,"escolar, Lepidocybium flavobrunneum",
+n02622547,1,"escolar, Lepidocybium flavobrunneum",-
 n02657368,764,flatfish,-
 n02561381,1269,"northern pike, Esox lucius",F
 n01446589,65,cyprinodont,-
@@ -279,7 +279,7 @@ n02533545,108,"Pacific sardine, Sardinops caerulea",F
 n02590495,12,"sparid, sparid fish",-
 n02587618,498,"schoolmaster, Lutjanus apodus",F
 n02620578,379,"archerfish, Toxotes jaculatrix",F
-n02529293,1,"beaked salmon, sandfish, Gonorhynchus gonorhynchus",
+n02529293,1,"beaked salmon, sandfish, Gonorhynchus gonorhynchus",-
 n02644665,200,"red rockfish, Sebastodes ruberrimus",F
 n01457852,1293,"trumpetfish, Aulostomus maculatus",F
 n02542017,368,"ladyfish, tenpounder, Elops saurus",F
@@ -295,7 +295,7 @@ n02643836,1189,"stonefish, Synanceja verrucosa",-
 n02548689,430,"toadfish, Opsanus tau",-
 n02570838,694,"surfperch, surffish, surf fish",-
 n02524524,174,hake,-
-n02662397,2,"horned whiff, Citharichthys cornutus",
+n02662397,2,"horned whiff, Citharichthys cornutus",-
 n02526818,234,"common eel, freshwater eel",-
 n02604954,374,"spadefish, angelfish, Chaetodipterus faber",F
 n01498989,1134,eagle ray,-
@@ -338,17 +338,17 @@ n02574271,506,"cobia, Rachycentron canadum, sergeant fish",F
 n01485479,724,"basking shark, Cetorhinus maximus",F
 n02619165,1241,"goby, gudgeon",-
 n02535163,465,blackfish,-
-n02578233,2,"moonfish, Atlantic moonfish, horsefish, horsehead, horse-head, dollarfish, Selene setapinnis",
+n02578233,2,"moonfish, Atlantic moonfish, horsefish, horsehead, horse-head, dollarfish, Selene setapinnis",-
 n02654112,629,"leatherjacket, leatherfish",-
-n02626471,1,"sierra, Scomberomorus sierra",
+n02626471,1,"sierra, Scomberomorus sierra",-
 n02606751,26,"beaugregory, Pomacentrus leucostictus",F
 n02606052,562,"rock beauty, Holocanthus tricolor",F
 n02520147,1114,"flathead catfish, mudcat, goujon, shovelnose catfish, spoonbill catfish, Pylodictus olivaris",F
-n02577041,5,"yellow jack, Caranx bartholomaei",F
+n02577041,5,"yellow jack, Caranx bartholomaei",-
 n02580336,537,scad,-
 n02643566,1513,lionfish,-
 n02537085,1243,trout,-
-n02639922,3,"Chinese paddlefish, Psephurus gladis",F
+n02639922,3,"Chinese paddlefish, Psephurus gladis",-
 n02551668,258,"saury, billfish, Scomberesox saurus",F
 n02637977,190,whiting,-
 n02547733,31,batfish,-
@@ -357,7 +357,7 @@ n02624551,453,"common mackerel, shiner, Scomber scombrus",F
 n02633677,150,"palometa, California pompano, Palometa simillima",F
 n02581642,147,"round scad, cigarfish, quiaquia, Decapterus punctatus",F
 n02625258,1130,"wahoo, Acanthocybium solandri",F
-n02575590,1,"whale sucker, whalesucker, Remilegia australis",
+n02575590,1,"whale sucker, whalesucker, Remilegia australis",-
 n02536165,655,"sockeye, sockeye salmon, red salmon, blueback salmon, Oncorhynchus nerka",F
 n02640242,981,sturgeon,-
 n02566489,260,"white perch, silver perch, Morone americana",F
@@ -374,7 +374,7 @@ n02651060,47,"northern sea robin, Prionotus carolinus",F
 n02631041,895,marlin,-
 n02607201,1212,"clown anemone fish, Amphiprion percula",F
 n02636170,199,tripletail,-
-n02662825,5,"windowpane, Scophthalmus aquosus",F
+n02662825,5,"windowpane, Scophthalmus aquosus",-
 n02517938,7,"silurid, silurid fish",-
 n02626089,11,Scomberomorus maculatus,F
 n02621258,410,surgeonfish,-
@@ -407,7 +407,7 @@ n02648035,35,"pogge, armed bullhead, Agonus cataphractus",-
 n02603317,1114,barracuda,-
 n01494475,1094,"hammerhead, hammerhead shark",-
 n02558206,55,"snail darter, Percina tanasi",F
-n02582349,1,Coryphaena equisetis,
+n02582349,1,Coryphaena equisetis,-
 n02580830,847,"horse mackerel, saurel, Trachurus trachurus",F
 n01493829,305,"Atlantic spiny dogfish, Squalus acanthias",F
 n02590987,259,porgy,-
@@ -418,7 +418,7 @@ n02581482,176,"mackerel scad, mackerel shad, Decapterus macarellus",F
 n02534734,1349,salmon,
 n02633977,14,"harvestfish, Paprilus alepidotus",F
 n02534559,71,salmonid,-
-n02665250,3,"hogchoker, Trinectes maculatus",F
+n02665250,3,"hogchoker, Trinectes maculatus",-
 n02605936,1128,angelfish,-
 n02600298,337,"goatfish, red mullet, surmullet, Mullus surmuletus",F
 n02589316,105,"sailor's-choice, sailors choice, Haemulon parra",F
@@ -438,7 +438,7 @@ n02591330,204,"red porgy, Pagrus pagrus",F
 n02592371,419,"pinfish, sailor's-choice, squirrelfish, Lagodon rhomboides",F
 n01497413,90,"smalltooth sawfish, Pristis pectinatus",F
 n02660519,411,"Atlantic halibut, Hippoglossus hippoglossus",F
-n02632494,3,"louvar, Luvarus imperialis",F
+n02632494,3,"louvar, Luvarus imperialis",-
 n01440764,1133,"tench, Tinca tinca",F
 n02590094,562,"pigfish, hogfish, Orthopristis chrysopterus",F
 n02610373,114,"cunner, bergall, Tautogolabrus adspersus",F
@@ -446,7 +446,7 @@ n02635154,36,"barrelfish, black rudderfish, Hyperglyphe perciformis",F
 n02561661,1049,pickerel,-
 n02523110,442,"whiting, Merlangus merlangus, Gadus merlangus",F
 n02634545,40,driftfish,-
-n02637475,3,"silver jenny, Eucinostomus gula",F
+n02637475,3,"silver jenny, Eucinostomus gula",-
 n02642107,6,"scorpaenoid, scorpaenoid fish",-
 n02524202,1115,"pollack, pollock, Pollachius pollachius",F
 n02584145,958,"cardinal tetra, Paracheirodon axelrodi",F
@@ -471,11 +471,11 @@ n02660640,503,"Pacific halibut, Hippoglossus stenolepsis",F
 n02515214,1,"crossopterygian, lobefin, lobe-finned fish",-
 n02532786,56,sild,-
 n02656301,385,burrfish,-
-n02596252,5,"maigre, maiger, Sciaena aquila",F
+n02596252,5,"maigre, maiger, Sciaena aquila",-
 n02577952,21,"threadfish, thread-fish, Alectis ciliaris",F
 n02539894,186,"round whitefish, Menominee whitefish, Prosopium cylindraceum",F
 n02564270,1183,freshwater bass,-
-n02532918,3,"brisling, sprat, Clupea sprattus",F
+n02532918,3,"brisling, sprat, Clupea sprattus",-
 n02563949,208,"spotted sunfish, stumpknocker, Lepomis punctatus",F
 n02532602,813,sardine,-
 n02631775,427,"white marlin, Makaira albida",F
@@ -505,7 +505,7 @@ n01492357,31,smooth dogfish,-
 n02653145,1155,triggerfish,-
 n02572484,615,"flame fish, flamefish, Apogon maculatus",F
 n02626762,1298,"tuna, tunny",-
-n02597004,1,"yellowfin croaker, surffish, surf fish, Umbrina roncador",
+n02597004,1,"yellowfin croaker, surffish, surf fish, Umbrina roncador",-
 n01453475,221,"boarfish, Capros aper",F
 n01500476,1168,"Atlantic manta, Manta birostris",F
 n02629230,1033,"bonito, oceanic bonito, Katsuwonus pelamis",F
@@ -537,7 +537,7 @@ n02557909,496,"blue pike, blue pickerel, blue pikeperch, blue walleye, Strizoste
 n02556846,1088,perch,-
 n02581108,65,"bigeye scad, big-eyed scad, goggle-eye, Selar crumenophthalmus",F
 n02626265,1139,"cero, pintado, kingfish, Scomberomorus regalis",F
-n02622249,2,"snake mackerel, Gempylus serpens",
+n02622249,2,"snake mackerel, Gempylus serpens",-
 n02573704,855,"bluefish, Pomatomus saltatrix",F
 n02622712,57,"oilfish, Ruvettus pretiosus",F
 n02537525,1255,"rainbow trout, Salmo gairdneri",F
@@ -546,7 +546,7 @@ n02608547,219,"hogfish, hog snapper, Lachnolaimus maximus",F
 n02524928,1,ling,-
 n02527271,1276,"moray, moray eel",-
 n02598134,100,"corbina, Menticirrhus undulatus",F
-n02546028,6,"New World opah, Lampris guttatus",F
+n02546028,6,"New World opah, Lampris guttatus",-
 n02516188,611,lungfish,-
 n02535258,1134,redfish,-
 n01484097,1030,"mako, mako shark",-
