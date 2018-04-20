@@ -226,7 +226,7 @@ def _copy_images_for_class(cls, rows, copy_total, imagenet_folder, output_folder
             copy_train = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TRAIN))
             copy_val = int(math.floor(float(copy_total) * PERCENTAGE_FOR_VALIDATION))
             copy_test = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TEST))
-            print ('%d : %d : %d' % (copy_train, copy_val, copy_test))
+            # print ('%d : %d : %d' % (copy_train, copy_val, copy_test))
 
             index = 0
             dst_folder = ''
