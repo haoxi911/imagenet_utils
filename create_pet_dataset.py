@@ -216,16 +216,17 @@ def _copy_images_for_class(cls, rows, copy_total, imagenet_folder, output_folder
     print('  Pick up {:4d} images from each subclass, {:4d} for training, {:4d} for validation, {:4d} for testing'
           .format(avg_total, avg_train, avg_val, avg_test))
 
-    for wnid, length in rows.iteritems():
+    for wnid, unused in rows.iteritems():
         tar = os.path.join(imagenet_folder, wnid + '.tar')
         handle = tarfile.open(tar)
         files = handle.getmembers()
         if len(files) >= SUBCLASS_IMAGES_MIN:
             random.shuffle(files)
-            copy_total = min(length, avg_total)
+            copy_total = min(len(files), avg_total)
             copy_train = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TRAIN))
             copy_val = int(math.floor(float(copy_total) * PERCENTAGE_FOR_VALIDATION))
             copy_test = int(math.floor(float(copy_total) * PERCENTAGE_FOR_TEST))
+            print ('%d : %d : %d' % (copy_train, copy_val, copy_test))
 
             index = 0
             dst_folder = ''
