@@ -1,37 +1,37 @@
-n04459122,217,"touring car, phaeton, tourer"
-n04285965,1936,"sport utility, sport utility vehicle, S.U.V., SUV"
-n02701002,1510,ambulance
-n04037443,1552,"racer, race car, racing car"
-n03881534,102,panda car
-n03543394,1202,"hot rod, hot-rod"
-n04166281,1932,"sedan, saloon"
-n03342961,145,finisher
-n04201733,1950,shooting brake
-n03670208,1693,"limousine, limo"
-n03594945,1415,"jeep, landrover"
-n03777568,1268,Model T
-n03472937,82,gypsy cab
-n04322801,1530,stock car
-n03100240,1887,convertible
-n03404012,240,funny wagon
-n03079136,1101,"compact, compact car"
-n04097373,1197,"roadster, runabout, two-seater"
-n04347119,1055,"subcompact, subcompact car"
-n04516354,1517,"used-car, secondhand car"
-n03141065,1321,"cruiser, police cruiser, patrol car, police car, prowl car, squad car"
-n03119396,1464,coupe
-n03770679,1555,minivan
-n04285008,1165,"sports car, sport car"
-n03268790,1169,"electric, electric automobile, electric car"
-n03680512,1003,loaner
-n03770085,551,minicar
-n04302988,372,Stanley Steamer
-n02831335,1177,berlin
-n03498781,1177,hatchback
-n02958343,1307,"car, auto, automobile, machine, motorcar"
-n03421669,751,gas guzzler
-n03870105,1122,pace car
-n03493219,213,hardtop
-n03539103,406,horseless carriage
-n02930766,1326,"cab, hack, taxi, taxicab"
-n02814533,1366,"beach wagon, station wagon, wagon, estate car, beach waggon, station waggon, waggon"
+n04459122,217,"touring car, phaeton, tourer",X
+n04285965,1936,"sport utility, sport utility vehicle, S.U.V., SUV",X
+n02701002,1510,ambulance,X
+n04037443,1552,"racer, race car, racing car",
+n03881534,102,panda car,X
+n03543394,1202,"hot rod, hot-rod",
+n04166281,1932,"sedan, saloon",X
+n03342961,145,finisher,
+n04201733,1950,shooting brake,
+n03670208,1693,"limousine, limo",X
+n03594945,1415,"jeep, landrover",X
+n03777568,1268,Model T,X
+n03472937,82,gypsy cab,
+n04322801,1530,stock car,X
+n03100240,1887,convertible,
+n03404012,240,funny wagon,X
+n03079136,1101,"compact, compact car",X
+n04097373,1197,"roadster, runabout, two-seater",X
+n04347119,1055,"subcompact, subcompact car",X
+n04516354,1517,"used-car, secondhand car",X
+n03141065,1321,"cruiser, police cruiser, patrol car, police car, prowl car, squad car",X
+n03119396,1464,coupe,X
+n03770679,1555,minivan,X
+n04285008,1165,"sports car, sport car",X
+n03268790,1169,"electric, electric automobile, electric car",X
+n03680512,1003,loaner,X
+n03770085,551,minicar,X
+n04302988,372,Stanley Steamer,
+n02831335,1177,berlin,X
+n03498781,1177,hatchback,X
+n02958343,1307,"car, auto, automobile, machine, motorcar",X
+n03421669,751,gas guzzler,
+n03870105,1122,pace car,
+n03493219,213,hardtop,
+n03539103,406,horseless carriage,
+n02930766,1326,"cab, hack, taxi, taxicab",X
+n02814533,1366,"beach wagon, station wagon, wagon, estate car, beach waggon, station waggon, waggon",X
