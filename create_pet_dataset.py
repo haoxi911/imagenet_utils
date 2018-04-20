@@ -164,7 +164,7 @@ PERCENTAGE_FOR_VALIDATION = 0.2
 PERCENTAGE_FOR_TEST = 0.1
 
 # minimum number of images for each subclass in dataset
-SUBCLASS_IMAGES_MIN = 6
+SUBCLASS_IMAGES_MIN = 1
 
 
 def _read_wnid_full(imagenet_folder):
