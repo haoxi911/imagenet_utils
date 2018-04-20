@@ -159,9 +159,9 @@ POS_IMAGES_PER_CLASS = 5000
 NEG_IMAGES_PER_CLASS = 3000
 
 # how we split train / validation / test set.
-PERCENTAGE_FOR_TRAIN = 0.7
+PERCENTAGE_FOR_TRAIN = 0.65
 PERCENTAGE_FOR_VALIDATION = 0.2
-PERCENTAGE_FOR_TEST = 0.1
+PERCENTAGE_FOR_TEST = 0.15
 
 # minimum number of images for each subclass in dataset
 SUBCLASS_IMAGES_MIN = 1
