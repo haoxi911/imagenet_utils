@@ -152,6 +152,14 @@ POS_IMAGE_CATEGORIES = [
     'bird', 'cat', 'dog', 'fish', 'horse', 'reptile', 'small animals'
 ]
 
+# the broken / corrupted images
+CORRUPTED_IMAGE_FILES = [
+    "n09620794_5529.JPEG",
+    "n01640846_9466.JPEG",
+    "n04155068_537.JPEG",
+    "n12757303_3302.JPEG"
+]
+
 # number of images for positive category (e.g. cats, dogs, etc.)
 POS_IMAGES_PER_CLASS = 5000
 
@@ -245,8 +253,9 @@ def _copy_images_for_class(cls, rows, copy_total, imagenet_folder, output_folder
                         os.makedirs(dst_folder)
                 elif index >= copy_train + copy_val + copy_test:
                     break
-                handle.extract(item, dst_folder)
-                print('  Extracted file: %s' % item.name)
+                if item.name not in CORRUPTED_IMAGE_FILES:
+                    handle.extract(item, dst_folder)
+                    print('  Extracted file: %s' % item.name)
                 index += 1
         handle.close()
 
